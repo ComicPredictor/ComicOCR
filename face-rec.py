@@ -168,48 +168,6 @@ def filter_out_boxes(
     
     return box_to_color_map, instance_masks, instance_boundaries
 
-    # Draw all boxes onto image.
-    for box, color in box_to_color_map.items():
-        ymin, xmin, ymax, xmax = box
-        if instance_masks is not None:
-            draw_mask_on_image_array(
-                image, box_to_instance_masks_map[box], color=color, alpha=mask_alpha
-            )
-        if instance_boundaries is not None:
-            draw_mask_on_image_array(
-                image, box_to_instance_boundaries_map[box], color="red", alpha=1.0
-            )
-        draw_bounding_box_on_image_array(
-            image,
-            ymin,
-            xmin,
-            ymax,
-            xmax,
-            color=color,
-            thickness=0 if skip_boxes else line_thickness,
-            display_str_list=box_to_display_str_map[box],
-            use_normalized_coordinates=use_normalized_coordinates,
-        )
-        if keypoints is not None:
-            keypoint_scores_for_box = None
-            if box_to_keypoint_scores_map:
-                keypoint_scores_for_box = box_to_keypoint_scores_map[box]
-            draw_keypoints_on_image_array(
-                image,
-                box_to_keypoints_map[box],
-                keypoint_scores_for_box,
-                min_score_thresh=min_score_thresh,
-                color=color,
-                radius=line_thickness / 2,
-                use_normalized_coordinates=use_normalized_coordinates,
-                keypoint_edges=keypoint_edges,
-                keypoint_edge_color=color,
-                keypoint_edge_width=line_thickness // 2,
-            )
-
-    return image
-
-
 def get_detections(frame):
     """Get the detections boxes, scores and classes from the input frame"""
 
