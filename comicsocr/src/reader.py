@@ -48,7 +48,7 @@ class Reader:
         tokens = self.tokenizer.tokenize(imagePath=imagePath)
         #scripts = []
         poses=[]
-        for token in tokens:
+        for token, bbox in tokens:
             # enlarge
             token = cv2.resize(token, (0, 0), fx=2, fy=2)
             # denoise
@@ -64,7 +64,7 @@ class Reader:
             tokenGrayBlurLaplacian = cv2.Laplacian(tokenGrayBlur, cv2.CV_64F)
             # adjust contrast and brightness
             tokenGrayBlurLaplacian = np.uint8(np.clip((10 * tokenGrayBlurLaplacian + 10), 0, 255))
-            poses.append(pytesseract.image_to_boxes(tokenGrayBlurLaplacian))
+            poses.append((pytesseract.image_to_boxes(tokenGrayBlurLaplacian), bbox))
             #script = pytesseract.image_to_string(tokenGrayBlurLaplacian, lang='eng')
             # if len(script) == 0 or script.isspace():
             #     continue

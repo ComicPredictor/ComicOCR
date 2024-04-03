@@ -63,7 +63,7 @@ class Tokenizer:
                     # add the contour rectangle detected in green color to image
                     cv2.rectangle(image, (x, y), (w + x, h + y), (0, 255, 0), 2)
                 croppedImage = image[y:y + h, x:x + w]
-                croppedImageList.append(croppedImage)
+                croppedImageList.append((croppedImage, (y,y + h, x,x + w)))
         if self.config.show:
             # view all contour rectangles that are detected
             image = Tokenizer.resize(image=image,
