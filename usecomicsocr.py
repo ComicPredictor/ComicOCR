@@ -16,7 +16,7 @@ def textnpos(image_path:str, show:bool=False, log:bool=False):
             if j:
                 char, x, y, w, h, _ = j.split(" ")
                 x, y, w, h = int(x), int(y), int(w), int(h)
-                if char and char.lower() in "abcdefghijklmnopqrstuv,.?!" and (x!= 0 and y != 0):
+                if char and char.lower() in "abcdefghijklmnopqrstuv,.?!" and x!= 0 and y != 0:
                     if b==0 and show:
                         cv2.rectangle(img, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 0, 255), 2)
                     b=1

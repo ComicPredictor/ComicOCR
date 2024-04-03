@@ -1,2 +1,2 @@
-echo Download the savedmodel folder that you will see in the opened link:&&pause
+echo Download the savedmodel folder that you will see in the link https://github.com/Justsecret123/One-Piece-characters-detector?tab=readme-ov-file
 start https://github.com/Justsecret123/One-Piece-characters-detector?tab=readme-ov-file
