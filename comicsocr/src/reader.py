@@ -46,7 +46,7 @@ class Reader:
             Strings of comic script extracted from the image.
         '''
         tokens = self.tokenizer.tokenize(imagePath=imagePath)
-        scripts = []
+        #scripts = []
         poses=[]
         for token in tokens:
             # enlarge
@@ -65,12 +65,12 @@ class Reader:
             # adjust contrast and brightness
             tokenGrayBlurLaplacian = np.uint8(np.clip((10 * tokenGrayBlurLaplacian + 10), 0, 255))
             poses.append(pytesseract.image_to_boxes(tokenGrayBlurLaplacian))
-            script = pytesseract.image_to_string(tokenGrayBlurLaplacian, lang='eng')
-            if len(script) == 0 or script.isspace():
-                continue
-            for char in script:  # remove illegitimate characters
-                if char not in self.config.charsAllowed:
-                    script = script.replace(char, '')
-            logger.info(repr(script))
-            scripts.append(script)
-        return scripts, poses
+            #script = pytesseract.image_to_string(tokenGrayBlurLaplacian, lang='eng')
+            # if len(script) == 0 or script.isspace():
+            #     continue
+            # for char in script:  # remove illegitimate characters
+            #     if char not in self.config.charsAllowed:
+            #         script = script.replace(char, '')
+            # logger.info(repr(script))
+            # scripts.append(script)
+        return poses

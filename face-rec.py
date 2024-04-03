@@ -18,15 +18,6 @@ image = cv2.imread("comic_data/test/one-piece.jpg")
 CATEGORY_INDEX = {0: {"id": 1, "name": "character"}}
 
 
-def yolobbox2bbox(x, y, w, h):
-    H, W, _ = image.shape
-    x1, y1 = x - w / 2, y - h / 2
-    x2, y2 = x + w / 2, y + h / 2
-    return (int(H / 2 + H * x1 / 2), int(W / 2 + W * y1 / 2)), (
-        int(H / 2 + H * x2 / 2),
-        int(W / 2 + W * y2 / 2),
-    )
-
 
 def filter_out_boxes(
     image,

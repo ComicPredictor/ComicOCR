@@ -5,7 +5,7 @@ img = cv2.imread("comic_data\\test\\opm.jpg", cv2.IMREAD_COLOR)
 h_img, w_img, _ = img.shape
 
 data=api.read_from_file("comic_data\\test\\opm.jpg")
-for i in data[1]:
+for i in data:
     for j in i.split('\n'):
         if j:
             char, x, y, w, h, _ = j.split(" ")
