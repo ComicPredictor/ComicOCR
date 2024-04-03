@@ -1,0 +1,4 @@
+pytesseract
+patool
+opencv-python
+imutils
