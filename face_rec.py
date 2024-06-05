@@ -14,7 +14,7 @@ model = tf.saved_model.load("saved_model")
 # image = cv2.imread(
 #     "comic_data/test/show-your-cool-best-favourite-one-piece-manga-panel-v0-giqm40q1voy91-ezgif.com-webp-to-jpg-converter.jpg"
 # )
-image = cv2.imread("comic_data/test/one-piece.jpg")
+#image = cv2.imread("comic_data/test/one-piece.jpg")
 CATEGORY_INDEX = {0: {"id": 1, "name": "character"}}
 
 
@@ -219,28 +219,29 @@ def get_filtered(image, boxes, classes, scores):
 # yolobboxes = model(
 #     np.expand_dims(a, axis=0)
 # )  # detection_multiclass_scores (1, 100, 2), detection_anchor_indices (1, 100), num_detections (1,), raw_detection_scores (1, 51150, 2), raw_detection_boxes (1, 51150, 4), detection_scores (1, 100), detection_classes (1, 100), detection_boxes (1, 100, 4)
-image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-print(image.shape)
-image = np.pad(
-    image, ((50, 50), (50, 50), (0, 0)), mode="constant", constant_values=255
-)
+def draw_box(imgpath, show=False):
+    image=cv2.imread(imgpath)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    image = np.pad(
+        image, ((50, 50), (50, 50), (0, 0)), mode="constant", constant_values=255
+    )
+    detections = get_detections(image)
+    filtered_box_to_color_map, filtered_instance_masks, filtered_instance_boundaries = get_filtered(
+        image,
+        detections["detection_boxes"],
+        detections["detection_classes"],
+        detections["detection_scores"],
+    )
 
-detections = get_detections(image)
-filtered_box_to_color_map, filtered_instance_masks, filtered_instance_boundaries = get_filtered(
-    image,
-    detections["detection_boxes"],
-    detections["detection_classes"],
-    detections["detection_scores"],
-)
-
-image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-for box, color in filtered_box_to_color_map.items():
-    h_iamge, w_image, _ = image.shape
-    ymin, xmin, ymax, xmax = box
-    ymin, xmin, ymax, xmax = int(ymin * h_iamge), int(xmin * w_image), int(ymax * h_iamge), int(xmax * w_image)
-    cv2.rectangle(image, (xmin,ymin),(xmax,ymax), color=(255, 0, 0))
-print(filtered_box_to_color_map, filtered_instance_masks, filtered_instance_boundaries)
-
-cv2.imshow("d", image)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+    for box, color in filtered_box_to_color_map.items():
+        h_iamge, w_image, _ = image.shape
+        ymin, xmin, ymax, xmax = box
+        ymin, xmin, ymax, xmax = int(ymin * h_iamge), int(xmin * w_image), int(ymax * h_iamge), int(xmax * w_image)
+        cv2.rectangle(image, (xmin,ymin),(xmax,ymax), color=(255, 0, 0))
+    print(filtered_box_to_color_map, filtered_instance_masks, filtered_instance_boundaries)
+    if show:
+        cv2.imshow("d", image)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+    return  filtered_box_to_color_map.items(), image
