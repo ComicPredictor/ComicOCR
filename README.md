@@ -1,7 +1,7 @@
 # ComicOCR
 (fork of [largecats/comics-ocr](https://github.com/largecats/comics-ocr))
 
-please remember to go install tesseract.exe
+please remember to go install tesseract.exe and
 ```bash
 pip install -r requirements.txt
 ```
